@@ -265,7 +265,7 @@ bool AllreduceBase::ReConnectLinks(const char *cmd) {
   }
   try {
     utils::TCPSocket tracker = this->ConnectTracker();
-    fprintf(stdout, "rank %d connected to the tracker\n", rank);
+    fprintf(stdout, "task %s connected to the tracker\n", task_id.c_str());
     tracker.SendStr(std::string(cmd));
 
     // the rank of previous link, next link in ring
@@ -284,6 +284,7 @@ bool AllreduceBase::ReConnectLinks(const char *cmd) {
     Assert(rank == -1 || newrank == rank,
            "must keep rank to same if the node already have one");
     rank = newrank;
+    fprintf(stdout, "task %s got new rank %d\n", task_id.c_str(), rank);
     Assert(tracker.RecvAll(&num_neighbors, sizeof(num_neighbors)) == \
          sizeof(num_neighbors), "ReConnectLink failure 4");
     for (int i = 0; i < num_neighbors; ++i) {
