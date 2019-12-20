@@ -265,6 +265,7 @@ bool AllreduceBase::ReConnectLinks(const char *cmd) {
   }
   try {
     utils::TCPSocket tracker = this->ConnectTracker();
+    fprintf(stdout, "rank %d connected to the tracker\n", rank);
     tracker.SendStr(std::string(cmd));
 
     // the rank of previous link, next link in ring
