@@ -138,8 +138,6 @@ bool AllreduceBase::Shutdown(void) {
     utils::TCPSocket tracker = this->ConnectTracker();
     tracker.SendStr(std::string("shutdown"));
     tracker.Close();
-    // close listening sockets
-    sock_listen.Close();
     utils::TCPSocket::Finalize();
     return true;
   } catch (const std::exception& e) {
