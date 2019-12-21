@@ -304,9 +304,9 @@ bool AllreduceBase::ReConnectLinks(const char *cmd) {
       }
       // create listening socket
       sock_listen.Create();
-      sock_listen.SetKeepAlive(true);
+      // sock_listen.SetKeepAlive(true);
       // http://deepix.github.io/2016/10/21/tcprst.html
-      sock_listen.SetLinger(0);
+      // sock_listen.SetLinger(0);
       // [slave_port, slave_port+1 .... slave_port + newrank ...slave_port + nport_trial)
       // work around processes bind to same port without set reuse option,
       // start explore from slave_port + newrank towards end
@@ -404,7 +404,7 @@ bool AllreduceBase::ReConnectLinks(const char *cmd) {
       }
       if (!match) all_links.push_back(r);
     }
-
+    sock_listen.Close();
     this->parent_index = -1;
     // setup tree links and ring structure
     tree_links.plinks.clear();
