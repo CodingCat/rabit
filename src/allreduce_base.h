@@ -522,9 +522,9 @@ class AllreduceBase : public IEngine {
   // connect retry time
   int connect_retry;
   // backdoor listening peer connection
-  utils::TCPSocket sock_listen;
+  // utils::TCPSocket sock_listen;
   // backdoor port
-  int port = 0;
+  // int port = 0;
 };
 }  // namespace engine
 }  // namespace rabit

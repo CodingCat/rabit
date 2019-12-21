@@ -296,6 +296,13 @@ bool AllreduceBase::ReConnectLinks(const char *cmd) {
     Assert(tracker.RecvAll(&next_rank, sizeof(next_rank)) == sizeof(next_rank),
            "ReConnectLink failure 4");
 
+    utils::TCPSocket sock_listen;
+    sock_listen.Create();
+    int port = sock_listen.TryBindHost(slave_port, slave_port + nport_trial);
+    utils::Check(port != -1, "ReConnectLink fail to bind the ports specified");
+    sock_listen.Listen();
+
+    /*
     if (sock_listen == INVALID_SOCKET || sock_listen.AtMark()) {
       if (!sock_listen.IsClosed()) {
         sock_listen.Close();
@@ -314,7 +321,7 @@ bool AllreduceBase::ReConnectLinks(const char *cmd) {
 
       utils::Check(port != -1, "ReConnectLink fail to bind the ports specified");
       sock_listen.Listen();
-    }
+    }*/
 
     // get number of to connect and number of to accept nodes from tracker
     int num_conn, num_accept, num_error = 1;
